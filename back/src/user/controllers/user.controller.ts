@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Post, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Patch,
+  Param,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { IUserModel } from '../model/user.model';
 import { UserDto } from '../services/dto/userInput.dto';
 import { PartialUserDto } from '../services/dto/partialUser.dto';
+import { throws } from 'assert';
 
 @Controller()
 export class UserController {
@@ -11,6 +20,15 @@ export class UserController {
   @Get()
   async getAllUser(): Promise<IUserModel[]> {
     return await this.service.getAllUsers();
+  }
+
+  @Get(':id')
+  async getById(@Param('id') userId: string): Promise<IUserModel> {
+    try {
+      return await this.service.getById(userId);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Patch()
@@ -34,6 +52,20 @@ export class UserController {
         name,
         role,
       });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') userId: string): Promise<string> {
+    try {
+      const userDeleted = await this.service.deleteUser(userId);
+      if (userDeleted) {
+        return 'User deleted successfully';
+      } else {
+        return 'User not found';
+      }
     } catch (err) {
       console.log(err);
     }
