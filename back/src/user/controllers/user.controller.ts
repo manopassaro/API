@@ -16,30 +16,34 @@ import { PartialUserDto } from '../services/userDto/partialUser.dto';
 export class UserController {
   constructor(private service: UserService) {}
 
-  @Get()
+  @Get('/users')
   async getAllUser(): Promise<IUserModel[]> {
-    return await this.service.getAllUsers();
+    try {
+      return await this.service.getAllUsers();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  @Get(':id')
+  @Get('/users/:id')
   async getById(@Param('id') userId: string): Promise<IUserModel> {
     try {
       return await this.service.getById(userId);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  @Patch()
+  @Patch('/users')
   async updateUser(@Body() userData: PartialUserDto): Promise<IUserModel> {
     try {
       return await this.service.updateUser(userData);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  @Post()
+  @Post('/users')
   async createUser(
     @Body() { cpf, email, password, name, role }: UserDto,
   ): Promise<IUserModel> {
@@ -51,12 +55,12 @@ export class UserController {
         name,
         role,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  @Delete(':id')
+  @Delete('/users/:id')
   async deleteUser(@Param('id') userId: string): Promise<string> {
     try {
       const userDeleted = await this.service.deleteUser(userId);
@@ -65,8 +69,8 @@ export class UserController {
       } else {
         return 'User not found';
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
