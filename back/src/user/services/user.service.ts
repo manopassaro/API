@@ -12,7 +12,7 @@ export class UserService {
     return userModel;
   }
 
-  async uptadeUser(userData: PartialUserDto): Promise<IUserModel> {
+  async updateUser(userData: PartialUserDto): Promise<IUserModel> {
     this.users.map((user, index) => {
       if (user.id === userData.id) {
         const updatedUser = Object.assign(user, userData);
@@ -21,5 +21,9 @@ export class UserService {
     });
     const updatedUser = this.users.find((user) => user.id === userData.id);
     return updatedUser;
+  }
+
+  async getAllUsers(): Promise<IUserModel[]> {
+    return this.users;
   }
 }
