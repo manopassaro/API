@@ -16,7 +16,7 @@ import { PartialSongDto } from '../services/musicDto/partialMusic.dto';
 export class SongController {
   constructor(private service: SongService) {}
 
-  @Get()
+  @Get('/songs')
   async getAllSongs(): Promise<ISongModel[]> {
     try {
       return await this.service.getAllSongs();
@@ -25,7 +25,7 @@ export class SongController {
     }
   }
 
-  @Get()
+  @Get('/songs/:id')
   async getById(@Param('id') songId: string): Promise<ISongModel> {
     try {
       return await this.service.getById(songId);
@@ -34,10 +34,39 @@ export class SongController {
     }
   }
 
-  @Patch()
+  @Post('/songs')
+  async createSong(
+    @Body() { name, album, albumCover }: SongDto,
+  ): Promise<ISongModel> {
+    try {
+      return await this.service.createSong({
+        name,
+        album,
+        albumCover,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  @Patch('/songs')
   async updateUser(@Body() songData: PartialSongDto): Promise<ISongModel> {
     try {
       return await this.service.updateSong(songData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  @Delete('/songs/:id')
+  async deleteUser(@Param('id') songId: string): Promise<string> {
+    try {
+      const songDeleted = await this.service.deleteSong(songId);
+      if (songDeleted) {
+        return 'Song deleted successfully';
+      } else {
+        return 'Song not found';
+      }
     } catch (err) {
       console.log(err);
     }
