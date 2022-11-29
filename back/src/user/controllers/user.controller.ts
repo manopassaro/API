@@ -9,9 +9,8 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { IUserModel } from '../model/user.model';
-import { UserDto } from '../services/dto/userInput.dto';
-import { PartialUserDto } from '../services/dto/partialUser.dto';
-import { throws } from 'assert';
+import { UserDto } from '../services/userDto/userInput.dto';
+import { PartialUserDto } from '../services/userDto/partialUser.dto';
 
 @Controller()
 export class UserController {

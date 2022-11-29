@@ -1,7 +1,7 @@
 import { IUserModel } from '../model/user.model';
-import { UserDto } from './dto/userInput.dto';
+import { UserDto } from './userDto/userInput.dto';
 import { randomUUID } from 'crypto';
-import { PartialUserDto } from './dto/partialUser.dto';
+import { PartialUserDto } from './userDto/partialUser.dto';
 
 export class UserService {
   private users: IUserModel[] = [];
