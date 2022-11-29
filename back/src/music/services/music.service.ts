@@ -2,7 +2,6 @@ import { ISongModel } from '../model/music.model';
 import { SongDto } from './musicDto/musicInput.dto';
 import { randomUUID } from 'crypto';
 import { PartialSongDto } from './musicDto/partialMusic.dto';
-import { userInfo } from 'os';
 
 export class SongService {
   private songs: ISongModel[] = [];
